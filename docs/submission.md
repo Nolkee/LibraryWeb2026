@@ -9,7 +9,7 @@
 - GitHub仓库：[Nolkee/LibraryWeb2026](https://github.com/Nolkee/LibraryWeb2026)，已创建并推送。
 - Gitee仓库：[nolokke/LibraryWeb2026](https://gitee.com/nolokke/LibraryWeb2026)，当前为私有仓库；新账号公开发布需先完成平台要求的安全验证。通过Gitee网页从GitHub导入完整提交历史，已核对main分支与全部6次原有提交。
 - WAR：`target/LibraryWeb2026.war`。
-- 视频：`target/LibraryWeb2026-演示视频.mp4`，94秒，H.264，1414×786，已生成并抽查画面；尚未上传课程答案区。
+- 视频：`target/LibraryWeb2026-演示视频.mp4`，94秒，H.264，1414×786，已生成并抽查画面；已上传课程答案区并暂存，刷新后核对附件和仓库地址均保留，尚未最终提交。
 - 本机地址：http://localhost:8080/LibraryWeb2026/
 - 当前局域网地址：http://10.161.56.246:8080/LibraryWeb2026/
 
@@ -22,4 +22,4 @@
 1. GitHub已公开；Gitee为私有，若老师需要访问Gitee，请先完成平台安全验证并开放仓库，或授予老师访问权限。
 2. 本地已生成 WAR、源码ZIP及演示视频，可从 target 目录取用。
 3. 用同一网络的手机/电脑打开局域网地址；如校园网隔离设备，可使用手机热点。
-4. 在课程答案区填写 GitHub 地址，上传演示视频，检查上传完成后再提交。
+4. 课程答案区已填写GitHub/Gitee地址并上传视频，已暂存并刷新核验；检查内容和仓库访问权限后，再进行最终提交。

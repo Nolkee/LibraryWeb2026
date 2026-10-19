@@ -96,3 +96,19 @@ WAR：`target/LibraryWeb2026.war`。录屏脚本与时间轴说明位于 `script
 ## 依赖许可
 
 jQuery、Axios、Vue 为第三方开源依赖；各自许可证声明保留在分发文件头部。MySQL驱动、Servlet API及Gson由Maven管理。作业1工具代码来源于同目录的 jdbc-tool-homework 项目。
+
+## 代码仓库
+
+- GitHub（公开）：https://github.com/Nolkee/LibraryWeb2026
+- Gitee（当前私有）：https://gitee.com/nolokke/LibraryWeb2026
+
+本地已配置 origin 与 gitee 两个 remote。后续每完成一个功能，提交后分别推送：
+
+```bash
+git add .
+git commit -m "feat: 本次完成的功能"
+git push origin main
+git push gitee main
+```
+
+Gitee命令行推送需要自行配置该账号的Git认证。本次在账号登录后通过网页导入已有GitHub提交历史；导入保留提交，不代表在此前每完成一个功能时已经分别推送至Gitee。

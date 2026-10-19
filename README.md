@@ -60,5 +60,5 @@ mvn package
 
 ## 代码仓库
 
-- [Gitee](https://gitee.com/nolokke/LibraryWeb2026)（目前为私有仓库）
+- [Gitee](https://gitee.com/nolokke/LibraryWeb2026)（公开）
 - [GitHub](https://github.com/Nolkee/LibraryWeb2026)（公开）

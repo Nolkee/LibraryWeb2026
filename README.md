@@ -33,7 +33,7 @@ bash scripts/start-local.sh
 bash scripts/restore-local.sh ../LibraryDB
 ```
 
-本机 MySQL 使用3307端口，Tomcat使用8080端口。数据库设置在 `scripts/env.sh` 中。换电脑运行的详细步骤见 `docs/`。
+本机 MySQL 使用3307端口，Tomcat使用8080端口。数据库设置在 `scripts/env.sh` 中，换电脑时需要按实际安装位置修改。
 
 ## 测试账号
 
@@ -56,7 +56,7 @@ mvn package
 
 生成的文件为 `target/LibraryWeb2026.war`，放到 Tomcat 的 `webapps` 文件夹中即可运行。
 
-同一局域网中的其他设备可以访问 `http://电脑IP:8080/LibraryWeb2026/`。演示视频和作业提交包放在 `target/` 文件夹中。
+同一局域网中的其他设备可以访问 `http://电脑IP:8080/LibraryWeb2026/`。
 
 ## 代码仓库
 

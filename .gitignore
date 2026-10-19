@@ -5,3 +5,10 @@ target/
 .DS_Store
 .idea/
 __pycache__/
+
+# 本机录屏、验证和提交材料不放进代码仓库
+/docs/
+/scripts/record_demo.py
+/scripts/integration_test.py
+*.mp4
+*.mov

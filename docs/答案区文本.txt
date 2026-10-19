@@ -1,0 +1,5 @@
+GitHub仓库地址：https://github.com/Nolkee/LibraryWeb2026
+
+项目名：LibraryWeb2026。
+采用Maven、HTML/CSS/jQuery/Axios/Vue、Servlet+JDBC、MySQL，复用作业1的JDBCTool；同一WAR部署于本机Tomcat10.1，未使用JSP、Spring Boot或MyBatis。数据库由附件备份恢复。
+已完成用户功能、图书功能以及选做的查询统计功能。运行演示视频另作为附件上传。

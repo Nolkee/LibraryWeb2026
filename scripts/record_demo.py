@@ -14,7 +14,7 @@ def js(code):
  return out.get('value')
 def caption(text):
  js("(()=>{let e=document.getElementById('recording-caption');if(!e){e=document.createElement('div');e.id='recording-caption';e.style='position:fixed;bottom:0;left:0;right:0;padding:9px 24px;background:#183d32;color:#fff;z-index:999999;font:14px sans-serif;display:flex;justify-content:space-between';document.body.append(e);}e.textContent="+json.dumps(text+'  |  '+ '实际访问地址：')+"+location.href;return true;})()")
- timeline.append((round(frame/2,1),text));print(text,flush=True)
+ timeline.append((round(frame/2,1),text));(ROOT/'.runtime/demo-timeline-progress.json').write_text(json.dumps(timeline,ensure_ascii=False,indent=2));print(text,flush=True)
 def hold(seconds=2):
  global frame
  for _ in range(int(seconds*2)):
@@ -35,6 +35,8 @@ def login(name,password):
  if js('!document.querySelector("#shell").hidden'):click('#logout')
  click('#loginTab');fill({'name':name,'password':password},'#authForm')
  code=js(r'(async()=>{let svg=await(await fetch("api/captcha")).text();return svg.match(/>(\d{4})<\/text>/)[1];})()');fill({'captcha':code},'#authForm');stage('用户名、密码与一次性验证码登录',1);submit('#authForm');assert js('!document.querySelector("#shell").hidden'),js('document.querySelector("#authError").textContent')
+# A new capture starts with an empty task-generated frame directory.
+for generated_frame in FRAMES.glob('*.png'):generated_frame.unlink()
 # Check page structure before acting. This script is specific to this project's observed DOM.
 assert js('Boolean(document.querySelector("#authForm")&&document.querySelector("#nav"))')
 if js('!document.querySelector("#shell").hidden'):click('#logout')
@@ -59,10 +61,10 @@ nav('books');search(book);click('[data-act="discard"]');stage('副本全部归�
 login('student1','student123');stage('学生首页：仅显示借书、还书、个人借阅功能',2)
 nav('borrow');stage('使用附件已有馆藏数据进行借阅',2)
 existing=js('(()=>{let b=document.querySelector("[data-act=borrow]");return b?b.dataset.id:null;})()');assert existing
-existing_title=js('document.querySelector("[data-act=borrow]").closest("tr").querySelector("td").innerText.split("\\n")[0]')
+existing_title=js('(async()=>{let rows=(await(await fetch("api/books?q=")).json()).data;return rows.find(b=>b.id==='+json.dumps(existing)+').title;})()')
 click('[data-act="borrow"][data-id="'+existing+'"]');stage('学生借阅成功，实时更新个人借阅记录',2)
 nav('mine');stage('个人借阅：全部、未还、超期及日期范围查询',2)
-nav('return');search(existing_title);click('[data-return]');stage('归还已有馆藏图书，完成学生借还闭环',2)
+nav('return');search(existing_title);stage('学生按副本编号归还原有馆藏',2);click('[data-return]');stage('归还已有馆藏图书，完成学生借还闭环',2)
 login('teacher','teacher123');stage('教师首页：增加推荐图书功能',2)
 nav('recommend');click('#recommend');rec='推荐演示'+str(int(time.time()))[-5:];fill(dict(title=rec,author='课程推荐组',publisher='课程出版社',price=58),'#recommendForm');stage('推荐图书：馆内无同名图书时提交审核',2);submit('#recommendForm');stage('教师查看推荐状态：待审核',2)
 click('#recommend');rec2='驳回演示'+str(int(time.time()))[-5:];fill(dict(title=rec2,author='课程推荐组',publisher='课程出版社',price=58),'#recommendForm');submit('#recommendForm')
@@ -73,9 +75,9 @@ fill({'mode':'','start':'2026-06-01','end':'2026-06-30'},'#search');submit('#sea
 nav('stats');stage('Vue统计视图：全部图书类型与专业借阅次数',3)
 nav('review')
 # Inspect observed rows and choose the pending recommendation by visible title.
-js('(()=>{let row=Array.from(document.querySelectorAll("#content tbody tr")).find(r=>r.innerText.includes('+json.dumps(rec)+'));row.querySelector("button").click();})()');time.sleep(.5)
+js(r'(()=>{let row=Array.from(document.querySelectorAll("#content tbody tr")).find(r=>r.innerText.replace(/\s/g,"").includes('+json.dumps(rec)+'));row.querySelector("button").click();})()');time.sleep(.5)
 fill(dict(type='计算机',days=30,stock=1),'#reviewForm');stage('审阅推荐：通过时设置类型、期限与库存',2);submit('#reviewForm');stage('审核通过，图书及其副本自动加入馆藏',2)
-js('(()=>{let row=Array.from(document.querySelectorAll("#content tbody tr")).find(r=>r.innerText.includes('+json.dumps(rec2)+'));row.querySelector("button").click();})()');time.sleep(.5)
+js(r'(()=>{let row=Array.from(document.querySelectorAll("#content tbody tr")).find(r=>r.innerText.replace(/\s/g,"").includes('+json.dumps(rec2)+'));row.querySelector("button").click();})()');time.sleep(.5)
 fill({'decision':'reject'},'#reviewForm');fill({'reason':'暂不符合本次课程馆藏采购计划'},'#reviewForm');stage('驳回推荐必须填写理由',2);submit('#reviewForm');stage('审核完成，保留审核结果与驳回理由',2)
 nav('borrow');search(rec);stage('审核通过的推荐图书已可借阅',2)
 nav('home');stage('演示完成 · 同一WAR提供静态页面和Servlet接口 · 无JSP',3)

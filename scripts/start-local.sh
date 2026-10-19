@@ -18,7 +18,12 @@ fi
 mvn -q package
 cp target/LibraryWeb2026.war "$CATALINA_HOME/webapps/"
 if ! curl -fsS http://127.0.0.1:8080/LibraryWeb2026/ >/dev/null; then
-  "$CATALINA_HOME/bin/startup.sh"
+  python3 - <<'PYLAUNCH'
+import os,subprocess,pathlib
+root=pathlib.Path(os.environ['CATALINA_HOME'])
+with open(root/'logs/catalina.out','ab') as output:
+    subprocess.Popen([str(root/'bin/catalina.sh'),'run'],stdin=subprocess.DEVNULL,stdout=output,stderr=output,start_new_session=True)
+PYLAUNCH
 fi
 printf '\nLocal: http://localhost:8080/LibraryWeb2026/\n'
 if command -v ipconfig >/dev/null; then
